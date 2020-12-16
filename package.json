@@ -2,7 +2,7 @@
   "name": "dialogflow-fulfillment-helper",
   "description": "Dialogflow Fulfillment Library for Node.js",
   "main": "src/dialogflow-fulfillment.js",
-  "version": "0.6.4-1",
+  "version": "0.6.5",
   "license": "Apache-2.0",
   "author": "Google Inc.",
   "directories": {
@@ -45,10 +45,10 @@
     "actions-on-google": "^2.5.0"
   },
   "devDependencies": {
-    "ava": "^0.24.0",
+    "ava": "^3.14.0",
     "eslint": "^4.15.0",
     "eslint-config-google": "^0.9.1",
-    "jsdoc-to-markdown": "^4.0.1",
+    "jsdoc-to-markdown": "^6.0.1",
     "jszip": "^3.1.5",
     "commander": "^2.15.1"
   }
