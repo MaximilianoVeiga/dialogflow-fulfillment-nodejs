@@ -119,8 +119,8 @@ class V2Agent {
      * @type {Object[]}
      */
 
-    this.agent.source =
-      this.agent.request_.body.originalDetectIntentRequest.source || null;
+    const intentSource = this.agent.request_.body.originalDetectIntentRequest.source;
+    this.agent.source = V1_TO_V2_PLATFORM_NAME[intentSource] || null;
     debug(`Source: ${JSON.stringify(this.agent.name)}`);
 
     /**

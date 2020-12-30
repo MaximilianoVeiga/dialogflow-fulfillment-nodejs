@@ -26,7 +26,7 @@ If only building Dialogflow Fulfillment for the [Google Assistant](https://dialo
 ## Setup Instructions
 ```javascript
 // Import the appropriate class
-const { WebhookClient } = require('dialogflow-fulfillment');
+const { WebhookClient } = require('dialogflow-fulfillment-helper');
 
  //Create an instance
 const agent = new WebhookClient({request: request, response: response});
