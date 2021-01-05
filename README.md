@@ -41,6 +41,83 @@ const agent = new WebhookClient({request: request, response: response});
 | [Multi-language/locale](https://github.com/dialogflow/fulfillment-multi-locale-nodejs)| Node.js |
 | [Dialogflow's Inline Editor Template](https://github.com/dialogflow/fulfillment-webhook-nodejs)| Node.js |
 
+### Express Sample
+
+```javascript
+'use strict';
+
+const { WebhookClient } = require('dialogflow-fulfillment-helper');
+const express = require('express');
+const bodyParser = require('body-parser');
+
+const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
+function WebhookProcessing(req, res) {
+  const agent = new WebhookClient({ request: req, response: res });
+    
+  let intentMap = new Map();
+    
+  intentMap.set('Default Welcome Intent', WelcomeIntentHandler);
+  intentMap.set('Default Fallback Intent', FallbackIntentHandler);
+    
+  agent.handleRequest(intentMap);
+}
+
+function WelcomeIntentHandler(agent) {
+  agent.add('Hello welcome.');
+}
+
+function FallbackIntentHandler(agent) {
+  agent.add('Sorry, I do not understand.');
+}
+
+app.post('/', function(req, res) {
+  WebhookProcessing(req, res);
+});
+
+app.listen(process.env.PORT || 5000, function () {
+  console.info(`Application launched on port ${process.env.PORT || 5000}`);
+});
+
+app.get('/', function (req, res) {
+  return res.status(200).send('Application launched!');
+});
+```
+
+### Cloud Functions Sample
+
+```javascript
+'use strict';
+
+const functions = require('firebase-functions');
+const { WebhookClient } = require('dialogflow-fulfillment-helper');
+
+const intents = require('./intents/index');
+
+exports.dialogflowFirebaseFulfillment = functions.https.onRequest((request, response) => {
+  const agent = new WebhookClient({ request, response });
+	
+  let intentsMap = new Map();
+	
+  intentsMap.set('Default Welcome Intent', WelcomeIntentHandler);
+  intentsMap.set('Default Fallback Intent', FallbackIntentHandler);
+    
+  agent.handleRequest(intentsMap);
+});
+
+function WelcomeIntentHandler(agent) {
+  agent.add('Hello welcome.');
+}
+
+function FallbackIntentHandler(agent) {
+  agent.add('Sorry, I do not understand.');
+}
+
+```
+
 ## References & Issues
 + Questions? Try [StackOverflow](https://stackoverflow.com/questions/tagged/dialogflow) or [Dialogflow Developer Community](https://plus.google.com/communities/103318168784860581977).
 + For bugs, please report an issue on [Github](https://github.com/dialogflow/dialogflow-fulfillment-nodejs/issues).
