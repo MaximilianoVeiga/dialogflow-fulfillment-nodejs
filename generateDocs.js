@@ -30,18 +30,18 @@ const richRepsonseClassNames = [ 'RichResponse', 'Card', 'Suggestion', 'Image', 
 
 const templateData = jsdoc2md.getTemplateDataSync({files: inputFiles});
 
-let output = ''
+let output = '';
 for (const className of webhookClientClassNames) {
   const template = `{{#class name="${className}"}}{{>docs}}{{/class}}`;
   output += jsdoc2md.renderSync({data: templateData, template: template});
-  fs.writeFileSync(webhookFilename, output);
+  fs.writeFileSync(outputDir + webhookFilename, output);
 }
 
-output = ''
+output = '';
 for (const className of richRepsonseClassNames) {
   const template = `{{#class name="${className}"}}{{>docs}}{{/class}}`;
   output += jsdoc2md.renderSync({data: templateData, template: template});
-  fs.writeFileSync(richResponseFilename, output);
+  fs.writeFileSync(outputDir + richResponseFilename, output);
 }
 
 exports.rewriteAnchor = function (anchor) {
