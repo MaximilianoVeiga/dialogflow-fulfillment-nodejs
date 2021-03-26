@@ -34,6 +34,7 @@ const agent = new WebhookClient({request: request, response: response});
 ## Samples
 | Name                                 | Language                         |
 | ------------------------------------ |:---------------------------------|
+| [Dialogflow Fulfillment Cloud Functions Sample](https://github.com/MaximilianoVeiga/dialogflow-cloud-functions) | Node.js |
 | [Dialogflow Fulfillment & Actions on Google](https://github.com/dialogflow/fulfillment-actions-library-nodejs) | Node.js |
 | [Dialogflow & Firebase's Firestore DB](https://github.com/dialogflow/fulfillment-firestore-nodejs) | Node.js |
 | [Bike Shop-Google Calendar API](https://github.com/dialogflow/fulfillment-bike-shop-nodejs)| Node.js|
