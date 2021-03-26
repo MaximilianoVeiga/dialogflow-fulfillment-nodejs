@@ -24,6 +24,7 @@ const test = require('ava');
 const {WebhookClient} = require('../src/dialogflow-fulfillment');
 const {Text, Card, Image, Suggestion, Payload} = require('../src/dialogflow-fulfillment');
 const {PLATFORMS} = require('../src/rich-responses/rich-response');
+const {Context} = require('../src/contexts');
 
 const imageUrl =
   'https://assistant.google.com/static/images/molecule/Molecule-Formation-stop.png';
@@ -195,12 +196,13 @@ test('Test v1 contexts', async (t) => {
     request: googleRequest,
     response: googleResponse,
   });
-  // setContext
-  agent.setContext(sampleContextName);
+  // context.set
+  const context = new Context(sampleContextName);
+  context.set(sampleContextName);
   t.deepEqual({name: sampleContextName}, agent.context.get(sampleContextName));
-  agent.setContext(secondContextName);
+  context.set(secondContextName);
   t.deepEqual({name: secondContextName}, agent.context.get(secondContextName));
-  agent.setContext(complexContext);
+  context.set(complexContext);
   t.deepEqual({name: complexContext.name,
     lifespan: 2, parameters: {city: 'Rome'}},
     agent.context.get(complexContext.name)
