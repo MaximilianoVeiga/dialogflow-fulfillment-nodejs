@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-const { debug, error } = require('./common');
+const {debug, error} = require('./common');
 
 // Response Builder classes
 const {
@@ -223,7 +223,7 @@ class V2Agent {
   addTextResponse_() {
     const message = this.agent.responseMessages_[0];
     const fulfillmentText = message.ssml || message.text;
-    this.addJson_({ fulfillmentText: fulfillmentText });
+    this.addJson_({fulfillmentText: fulfillmentText});
   }
 
   /**
@@ -235,7 +235,7 @@ class V2Agent {
    * @private
    */
   addPayloadResponse_(payload, requestSource) {
-    this.addJson_({ payload: payload.getPayload_(requestSource) });
+    this.addJson_({payload: payload.getPayload_(requestSource)});
   }
 
   /**
@@ -248,7 +248,7 @@ class V2Agent {
   addMessagesResponse_(requestSource) {
     let messages = this.buildResponseMessages_(requestSource);
     if (messages.length > 0) {
-      this.addJson_({ fulfillmentMessages: messages });
+      this.addJson_({fulfillmentMessages: messages});
     }
   }
 
@@ -428,7 +428,7 @@ class V2Agent {
     if (!messageJson.text.text[0]) {
       return null;
     } else {
-      return new Text({ text: messageJson.text.text[0], platform: platform });
+      return new Text({text: messageJson.text.text[0], platform: platform});
     }
   }
 
