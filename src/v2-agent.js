@@ -120,7 +120,12 @@ class V2Agent {
      */
 
     const intentSource = this.agent.request_.body.originalDetectIntentRequest.source;
+
     this.agent.source = V1_TO_V2_PLATFORM_NAME[intentSource] || null;
+    if (this.agent.source === null) {
+      if (this.agent.request_.body.originalDetectIntentRequest && this.agent.request_.body.originalDetectIntentRequest.payload && this.agent.request_.body.originalDetectIntentRequest.payload['Genesys-Conversation-Id'])
+      this.agent.source = V1_TO_V2_PLATFORM_NAME["genesys"] || null;
+    }
     debug(`Source: ${JSON.stringify(this.agent.name)}`);
 
     /**
