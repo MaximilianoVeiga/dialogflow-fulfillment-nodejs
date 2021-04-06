@@ -25,6 +25,7 @@ const PLATFORMS = {
   LINE: 'LINE',
   VIBER: 'VIBER',
   ACTIONS_ON_GOOGLE: 'ACTIONS_ON_GOOGLE',
+  GENESYS: 'GENESYS',
 };
 
 // All platform values
@@ -52,6 +53,7 @@ V2_TO_V1_PLATFORM_NAME[PLATFORMS.SKYPE] = 'skype';
 V2_TO_V1_PLATFORM_NAME[PLATFORMS.LINE] = 'line';
 V2_TO_V1_PLATFORM_NAME[PLATFORMS.VIBER] = 'viber';
 V2_TO_V1_PLATFORM_NAME[PLATFORMS.ACTIONS_ON_GOOGLE] = 'google';
+V2_TO_V1_PLATFORM_NAME[PLATFORMS.GENESYS] = 'genesys';
 
 // Map from v1 platform names to v2 platform names
 const V1_TO_V2_PLATFORM_NAME = {
@@ -64,6 +66,7 @@ const V1_TO_V2_PLATFORM_NAME = {
   line: PLATFORMS.LINE,
   viber: PLATFORMS.VIBER,
   google: PLATFORMS.ACTIONS_ON_GOOGLE,
+  genesys: PLATFORMS.GENESYS,
 };
 
 /**
