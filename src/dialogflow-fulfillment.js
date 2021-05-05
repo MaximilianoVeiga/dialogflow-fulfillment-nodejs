@@ -328,6 +328,52 @@ class WebhookClient {
     }
   }
 
+/**
+   * Handles the incoming Dialogflow request using a handler or Map of handlers
+   * Each handler must be a function callback.
+   * It maps from the intent action instead of the intent name
+   *
+   * @param {Map|requestCallback} handler map of Dialogflow intent action to handler function or
+   *     function to handle all requests.
+   *     In an intent map, a null can map to a default handler.
+   * @return {Promise}
+   */
+  handleRequestByAction(handler) {
+    if (typeof handler === 'function') {
+      let result = handler(this);
+      let promise = Promise.resolve(result);
+      return promise.then(() => this.send_());
+    }
+
+    if (!(handler instanceof Map)) {
+      error('handleRequest argument must be a function or map of action names to functions');
+      this.response_
+        .status(RESPONSE_CODE_BAD_REQUEST)
+        .status('handleRequest argument must be a function or map of action names to functions');
+      return Promise.reject( new Error(
+        'handleRequest argument must be a function or map of action names to functions'
+      ));
+    }
+
+    if (handler.get(this.action)) {
+      let result = handler.get(this.action)(this);
+      // If handler is a promise use it, otherwise create use default (empty) promise
+      let promise = Promise.resolve(result);
+      return promise.then(() => this.send_());
+    } else if (handler.get(null)) {
+      let result = handler.get(null)(this);
+      // If handler is a promise use it, otherwise create use default (empty) promise
+      let promise = Promise.resolve(result);
+      return promise.then(() => this.send_());
+    } else {
+      error('No handler for requested action');
+      this.response_
+        .status(RESPONSE_CODE_BAD_REQUEST)
+        .status('No handler for requested action');
+      return Promise.reject(new Error('No handler for requested action'));
+    }
+  }
+
   // --------------------------------------------------------------------------
   //          Deprecated Context methods
   // --------------------------------------------------------------------------
