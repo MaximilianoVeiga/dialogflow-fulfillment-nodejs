@@ -476,14 +476,19 @@ class WebhookClient {
    * let event = agent.setFollowupEvent('sample event name');
    *
    * @param {string|Object} event string with the name of the event or an event object
+   * @param {Object} parameters object to be set as the parameters
    */
-  setFollowupEvent(event) {
+  setFollowupEvent(event, parameters) {
     if (typeof event === 'string') {
       event = {name: event};
     } else if (typeof event.name !== 'string' || !event.name) {
       throw new Error('Followup event must be a string or have a name string');
     }
-
+    if (parameters) {
+      if (!event.parameters)
+        event.parameters = {};
+      Object.assign(event.parameters, parameters);
+    }
     this.client.setFollowupEvent_(event);
   }
 
