@@ -342,7 +342,7 @@ class WebhookClient {
     if (typeof handler === 'function') {
       let result = handler(this);
       let promise = Promise.resolve(result);
-      return promise.then(() => this.send_());
+      return promise.then(() => this.send_()).catch(err=>{throw err});
     }
 
     if (!(handler instanceof Map)) {
@@ -359,12 +359,12 @@ class WebhookClient {
       let result = handler.get(this.action)(this);
       // If handler is a promise use it, otherwise create use default (empty) promise
       let promise = Promise.resolve(result);
-      return promise.then(() => this.send_());
+      return promise.then(() => this.send_()).catch(err=>{throw err});
     } else if (handler.get(null)) {
       let result = handler.get(null)(this);
       // If handler is a promise use it, otherwise create use default (empty) promise
       let promise = Promise.resolve(result);
-      return promise.then(() => this.send_());
+      return promise.then(() => this.send_()).catch(err=>{throw err});
     } else {
       error('No handler for requested action');
       this.response_
