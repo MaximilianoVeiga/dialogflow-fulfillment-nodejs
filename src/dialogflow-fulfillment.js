@@ -328,6 +328,52 @@ class WebhookClient {
     }
   }
 
+/**
+   * Handles the incoming Dialogflow request using a handler or Map of handlers
+   * Each handler must be a function callback.
+   * It maps from the intent action instead of the intent name
+   *
+   * @param {Map|requestCallback} handler map of Dialogflow intent action to handler function or
+   *     function to handle all requests.
+   *     In an intent map, a null can map to a default handler.
+   * @return {Promise}
+   */
+  handleRequestByAction(handler) {
+    if (typeof handler === 'function') {
+      let result = handler(this);
+      let promise = Promise.resolve(result);
+      return promise.then(() => this.send_()).catch(err=>{throw err});
+    }
+
+    if (!(handler instanceof Map)) {
+      error('handleRequest argument must be a function or map of action names to functions');
+      this.response_
+        .status(RESPONSE_CODE_BAD_REQUEST)
+        .status('handleRequest argument must be a function or map of action names to functions');
+      return Promise.reject( new Error(
+        'handleRequest argument must be a function or map of action names to functions'
+      ));
+    }
+
+    if (handler.get(this.action)) {
+      let result = handler.get(this.action)(this);
+      // If handler is a promise use it, otherwise create use default (empty) promise
+      let promise = Promise.resolve(result);
+      return promise.then(() => this.send_()).catch(err=>{throw err});
+    } else if (handler.get(null)) {
+      let result = handler.get(null)(this);
+      // If handler is a promise use it, otherwise create use default (empty) promise
+      let promise = Promise.resolve(result);
+      return promise.then(() => this.send_()).catch(err=>{throw err});
+    } else {
+      error('No handler for requested action');
+      this.response_
+        .status(RESPONSE_CODE_BAD_REQUEST)
+        .status('No handler for requested action');
+      return Promise.reject(new Error('No handler for requested action'));
+    }
+  }
+
   // --------------------------------------------------------------------------
   //          Deprecated Context methods
   // --------------------------------------------------------------------------
@@ -430,14 +476,19 @@ class WebhookClient {
    * let event = agent.setFollowupEvent('sample event name');
    *
    * @param {string|Object} event string with the name of the event or an event object
+   * @param {Object} parameters object to be set as the parameters
    */
-  setFollowupEvent(event) {
+  setFollowupEvent(event, parameters) {
     if (typeof event === 'string') {
       event = {name: event};
     } else if (typeof event.name !== 'string' || !event.name) {
       throw new Error('Followup event must be a string or have a name string');
     }
-
+    if (parameters) {
+      if (!event.parameters)
+        event.parameters = {};
+      Object.assign(event.parameters, parameters);
+    }
     this.client.setFollowupEvent_(event);
   }
 
