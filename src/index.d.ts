@@ -166,7 +166,15 @@ export class WebhookClient {
      * @param handler map of Dialogflow action name to handler function or function to handle all requests (regardless of Dialogflow action).
      */
     handleRequest(
-        handler: Map<string, (agent: WebhookClient) => void> | ((agent: WebhookClient) => void),
+        handler: Map<string|null, (agent: WebhookClient) => void> | ((agent: WebhookClient) => void),
+    ): Promise<any>;
+
+    /**
+     * Handles the incoming Dialogflow request using a handler or Map of handlers Each handler must be a function callback. It maps from the intent action instead of the intent name.
+     * @param handler map of Dialogflow action name to handler function or function to handle all requests (regardless of Dialogflow intent name). Null handles all unmaped ones.
+     */
+     handleRequestByAction(
+        handler: Map<string|null, (agent: WebhookClient) => void> | ((agent: WebhookClient) => void),
     ): Promise<any>;
 
     /**
@@ -201,8 +209,9 @@ export class WebhookClient {
     /**
      * Set the followup event
      * @param event string with the name of the event or an event object
+     * @param parameters object to be set as the parameters
      */
-    setFollowupEvent(event: string | object): void;
+    setFollowupEvent(event: string | object, parameters?: any): void;
 
     /**
      * Get Actions on Google DialogflowConversation object
