@@ -1,9 +1,6 @@
 {
     "compilerOptions": {
-        "allowJs": true,
-        "declaration": true,
-        "emitDeclarationOnly": true,
-        "outDir": "dist",
+        "noEmit": true,
     
         "module": "commonjs",
         "target": "es6",
