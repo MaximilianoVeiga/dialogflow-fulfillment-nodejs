@@ -29,7 +29,7 @@ export enum Platforms {
 }
 
 export class Card extends RichResponse {
-    constructor(card: string | object);
+    constructor(card: string | any);
 
     setButton(button: { text: string; url: string }): Card;
 
@@ -39,9 +39,9 @@ export class Card extends RichResponse {
 
     setTitle(title: string): Card;
 
-    private getV1ResponseObject_(platform: Platforms): object;
+    private getV1ResponseObject_(platform: Platforms): any;
 
-    private getV2ResponseObject_(platform: Platforms): object;
+    private getV2ResponseObject_(platform: Platforms): any;
 }
 
 export class Image extends RichResponse {
@@ -56,9 +56,9 @@ export class Image extends RichResponse {
 
     setImage(imageUrl: string): Image;
 
-    private getV1ResponseObject_(platform: Platforms): object;
+    private getV1ResponseObject_(platform: Platforms): any;
 
-    private getV2ResponseObject_(platform: Platforms): object;
+    private getV2ResponseObject_(platform: Platforms): any;
 }
 
 export class Payload extends RichResponse {
@@ -68,35 +68,35 @@ export class Payload extends RichResponse {
 
     setPayload(payload: string): Payload;
 
-    private getPayload_(platform: Platforms): object;
+    private getPayload_(platform: Platforms): any;
 
-    private getV1ResponseObject_(platform: Platforms): object;
+    private getV1ResponseObject_(platform: Platforms): any;
 
-    private getV2ResponseObject_(platform: Platforms): object;
+    private getV2ResponseObject_(platform: Platforms): any;
 }
 
 export class Suggestion extends RichResponse {
-    constructor(suggestion: string | object);
+    constructor(suggestion: string | any);
 
     setReply(reply: string): Suggestion;
 
     private addReply_(reply: string): void;
 
-    private getV1ResponseObject_(platform: Platforms): object;
+    private getV1ResponseObject_(platform: Platforms): any;
 
-    private getV2ResponseObject_(platform: Platforms): object;
+    private getV2ResponseObject_(platform: Platforms): any;
 }
 
 export class Text extends RichResponse {
-    constructor(text: string | object);
+    constructor(text: string | any);
 
     setSsml(ssml: string): Text;
 
     setText(text: string): Text;
 
-    private getV1ResponseObject_(platform: Platforms): object;
+    private getV1ResponseObject_(platform: Platforms): any;
 
-    private getV2ResponseObject_(platform: Platforms): object;
+    private getV2ResponseObject_(platform: Platforms): any;
 }
 
 export class RichResponse {
@@ -122,14 +122,14 @@ export class WebhookClient {
     readonly contexts: Array<{
         name: string;
         lifespan: number;
-        parameters: object;
+        parameters: any;
     }>;
 
     /** Dialogflow source included in the request or null if no value  */
     readonly requestSource: string;
 
     /** Dialogflow original request object from detectIntent/query or platform integration (Google Assistant, Slack, etc.) in the request or null if no value */
-    readonly originalRequest: object;
+    readonly originalRequest: any;
 
     /** Original user query as indicated by Dialogflow or null if no value */
     readonly query: string;
@@ -144,13 +144,13 @@ export class WebhookClient {
     readonly consoleMessages: RichResponse[];
 
     /** List of alternative query results. Query results can be from other Dialogflow intents or Knowledge Connectors */
-    readonly alternativeQueryResults: object;
+    readonly alternativeQueryResults: any;
 
     /**
      * Constructor for WebhookClient object To be used in the Dialogflow fulfillment webhook logic
      * @param options JSON configuration with { request: Express HTTP request object, response: Express HTTP response object }
      */
-    constructor(options: { request: Request; response: Response } | object);
+    constructor(options: { request: Request; response: Response });
 
     /**
      * Add a response or list of responses to be sent to Dialogflow
@@ -185,7 +185,7 @@ export class WebhookClient {
      * Set a new Dialogflow outgoing context
      * @param context name of context or an object representing a context
      */
-    setContext(context: string | object): WebhookClient;
+    setContext(context: string | any): WebhookClient;
 
     /**
      * Clear all existing outgoing contexts
@@ -207,7 +207,7 @@ export class WebhookClient {
     ): {
         name: string;
         lifespan: number;
-        parameters: object;
+        parameters: any;
     };
 
     /**
@@ -215,7 +215,7 @@ export class WebhookClient {
      * @param event string with the name of the event or an event object
      * @param parameters object to be set as the parameters
      */
-    setFollowupEvent(event: string | object, parameters?: any): void;
+    setFollowupEvent(event: string | any, parameters?: any): void;
 
     /**
      * Get Actions on Google DialogflowConversation object
