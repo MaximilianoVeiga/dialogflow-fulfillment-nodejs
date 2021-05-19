@@ -22,6 +22,10 @@ export enum Platforms {
     LINE = 'LINE',
     VIBER = 'VIBER',
     ACTIONS_ON_GOOGLE = 'ACTIONS_ON_GOOGLE',
+    TELEPHONY = 'TELEPHONY',
+    GOOGLE_HANGOUTS = 'GOOGLE_HANGOUTS',
+    // Custom platforms
+    GENESYS = 'GENESYS',
 }
 
 export class Card extends RichResponse {
