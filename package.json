@@ -2,14 +2,15 @@
   "name": "dialogflow-fulfillment-helper",
   "description": "Dialogflow Fulfillment Library for Node.js",
   "main": "src/dialogflow-fulfillment.js",
-  "version": "0.6.10",
+  "version": "0.6.12",
   "license": "Apache-2.0",
   "author": "Google Inc.",
   "directories": {
     "test": "test"
   },
+  "types": "./index.d.ts",
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=12.0.0"
   },
   "scripts": {
     "test": "npm run lint && ava",
@@ -32,6 +33,7 @@
   "homepage": "https://github.com/MaximilianoVeiga/dialogflow-fulfillment-nodejs#readme",
   "keywords": [
     "dialogflow",
+    "dialogflow fulfillment helper",
     "api.ai",
     "client library",
     "webhook",
@@ -49,8 +51,8 @@
     "commander": "^2.15.1",
     "eslint": "^4.15.0",
     "eslint-config-google": "^0.9.1",
-    "jsdoc": "^3.6.6",
-    "jsdoc-to-markdown": "^6.0.1",
+    "jsdoc": "^3.6.7",
+    "jsdoc-to-markdown": "^7.0.1",
     "jszip": "^3.6.0"
   }
 }

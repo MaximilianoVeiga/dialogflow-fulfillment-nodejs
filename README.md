@@ -1,7 +1,7 @@
 # Dialogflow Fulfillment Library
 The [Dialogflow Fulfillment Library](https://dialogflow.com/docs/fulfillment) allows you to connect natural language understanding and processing to your own systems, APIs, and databases. Using Fulfillment, you can surface commands and information from your services to your users through a natural conversational interface.
 
-Dialogflow Fulfillment makes creating fulfillment for Dialogflow v1 and v2 agents for 8 chat and voice platforms on Node.js easy and simple.
+Dialogflow Fulfillment makes creating fulfillment for Dialogflow v1 and v2 agents for 9 chat and voice platforms on Node.js easy and simple.
 
 ![fulfillment library works with 8 platforms](https://raw.githubusercontent.com/dialogflow/dialogflow-fulfillment-nodejs/master/dialogflow-fulfillment-graphic.png "Dialogflow's fulfillment library works with 8 platforms")
 
@@ -12,14 +12,14 @@ Dialogflow Fulfillment makes creating fulfillment for Dialogflow v1 and v2 agent
 + Suggestion Chips (Quick Replies)
 + Payloads (Platform-specific responses)
 
-This library is intended to help build Node.js Dialogflow Fulfillment for multiple [integrations](https://dialogflow.com/docs/integrations/) including Google Assistant, Slack, Facebook, Telegram, Kik, Skype, Line, and Viber. See the reference documentation for more: https://dialogflow.com/docs/reference/fulfillment-library/webhook-client
+This library is intended to help build Node.js Dialogflow Fulfillment for multiple [integrations](https://dialogflow.com/docs/integrations/) including Google Assistant, Slack, Facebook, Telegram, Kik, Skype, Line, Genesys and Viber. See the reference documentation for more: https://dialogflow.com/docs/reference/fulfillment-library/webhook-client
 
 If only building Dialogflow Fulfillment for the [Google Assistant](https://dialogflow.com/docs/integrations/google-assistant) and no other integrations, use the Actions of Google NPM module ([actions-on-google](https://www.npmjs.com/package/actions-on-google)) which supports all Actions on Google features.
 
 ## Quick Start
 1. [Sign-up/Log-in to Dialogflow](https://console.dialogflow.com/api-client/#/login)
 2. Create a Dialogflow agent
-3. Go to **Fulfillment** > **Enable Dialogflow Inline Editor**<sup> A.</sup > **package.json** tab to add `"dialogflow-fulfillment-helper": "^0.6.7"` to the `dependencies` object.
+3. Go to **Fulfillment** > **Enable Dialogflow Inline Editor**<sup> A.</sup > **package.json** tab to add `"dialogflow-fulfillment-helper": "^0.6.11"` to the `dependencies` object.
 4. Select **Deploy**.
   <sup>A.</sup> Powered by Cloud Functions for Firebase
 
@@ -49,12 +49,11 @@ const agent = new WebhookClient({request: request, response: response});
 
 const { WebhookClient } = require('dialogflow-fulfillment-helper');
 const express = require('express');
-const bodyParser = require('body-parser');
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 function WebhookProcessing(req, res) {
   const agent = new WebhookClient({ request: req, response: res });
